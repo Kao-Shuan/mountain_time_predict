@@ -1,5 +1,5 @@
 ```
-MOUNTAIN/
+mountain_time_predict/
 ├── data/                         # 資料夾
 │   ├── interim/                  # 中間處理資料 (準備寫進DB的)
 │   ├── processed/                # 最終處理後資料 (ml建模前的最終dataframe?)
@@ -27,6 +27,6 @@ MOUNTAIN/
 ```
 
 
-## 如何執行
+## 如何執行py檔
 在專案根目錄執行任意東西，例如：
 python -m src.data_process.weather_parser
