@@ -6,7 +6,7 @@ import urllib.parse
 # --- 讀取 .env ---
 load_dotenv()
 
-# 專案根目錄：假設 config.py 位於 src/ 下
+# 專案根目錄：config.py 請在 src/ 下
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # data資料夾

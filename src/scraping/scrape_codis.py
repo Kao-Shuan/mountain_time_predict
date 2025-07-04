@@ -97,7 +97,7 @@ def get_station_available_date_range(stn_id: str):
     return start, end
 
 
-def download_weather_data(stn_id: str, download_dir=DATA_RAW / 'weather'):
+def download_codis(stn_id: str, download_dir=DATA_RAW / 'weather'):
     """
     下載指定氣象站ID(stn_id)從 start 到 end 的月報表資料。
     start, end 格式: 'YYYY/MM' 例如 '2016/04'
@@ -195,4 +195,4 @@ def download_weather_data(stn_id: str, download_dir=DATA_RAW / 'weather'):
     print("瀏覽器已關閉。")
 
 
-download_weather_data('C0F9Y0') # 桃山 
+download_codis('C0F9Y0') # 桃山 

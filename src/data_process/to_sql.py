@@ -36,25 +36,8 @@ def weather_to_sql():
 
 
 def gpx_to_sql():
-    df = pd.read_csv(DATA_INTERIM / 'gpx' / '桃山gpx.csv')
-    df = df.rename(columns={
-    "日期": "date",
-    "上傳此GPX用戶": "uploader",
-    "總距離水平(km)": "total_distance_km",
-    "總爬升高度(m)": "total_ascent_m",
-    "總下降高度(m)": "total_descent_m",
-    "總花費時間(HH:MM:SS)": "total_duration",
-    "起始到折返點時間(HH:MM:SS)": "ascent_time",
-    "折返到結束時間(HH:MM:SS)": "descent_time",
-    "上山水平速度(km/h)": "ascent_speed_kmh",
-    "上山垂直速度(m/h)": "ascent_speed_vmph",
-    "下山水平速度(km/h)": "descent_speed_kmh",
-    "下山垂直速度(m/h)": "descent_speed_vmph",
-    "全程平均水平速度(km/h)": "avg_speed_kmh",
-    "全程平均垂直速度(m/h)": "avg_speed_vmph",
-    "最高海拔(m)": "max_elevation_m",
-    "最低海拔(m)": "min_elevation_m",
-    })
+    df = pd.read_csv(DATA_INTERIM / 'gpx' / 'merged_taoshan_data.csv')
+
     df = df.astype(object).where(pd.notnull(df), None)
 
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -86,5 +69,6 @@ def gpx_to_sql():
 
     print(f"成功 upsert {len(df)}筆登山資料進資料庫！")
 
-weather_to_sql()
-gpx_to_sql()
+if __name__ == "__main__":
+    weather_to_sql()
+    gpx_to_sql()
