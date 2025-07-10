@@ -1,11 +1,41 @@
 import os
 import time
 from datetime import datetime, timedelta
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from math import radians, sin, cos, sqrt, atan2
 from src.config import DATA_RAW
+
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    return R * c
+
+def get_stn_id(lon, lat):
+    """回傳最近測站的站號"""
+    min_dist = float("inf")
+    nearest_station_id = None
+
+    df = pd.read_csv(r"data\interim\staions\stations.csv")
+
+    for _, row in df.iterrows():
+        try:
+            station_lat = float(row["緯度"])
+            station_lon = float(row["經度"])
+            dist = haversine(lat, lon, station_lat, station_lon)
+            if dist < min_dist:
+                min_dist = dist
+                nearest_station_id = row["站號"]
+        except ValueError:
+            continue
+
+    return nearest_station_id
 
 def get_station_available_date_range(stn_id: str):
     """
@@ -194,5 +224,6 @@ def download_codis(stn_id: str, download_dir=DATA_RAW / 'weather'):
     driver.quit()
     print("瀏覽器已關閉。")
 
-
-download_codis('C0F9Y0') # 桃山 
+if __name__ == "__main__":
+    stn_id = get_stn_id(121.3038, 24.4327)
+    download_codis(stn_id) # 桃山 
