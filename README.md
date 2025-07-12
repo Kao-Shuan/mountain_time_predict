@@ -25,7 +25,8 @@ mountain_time_predict/
 │   └── scraping/                 # for 爬蟲
 │       ├── scrape_hikingnote_gpx.py   # 爬 HikingNote GPX
 │       ├── scrape_hikingnote_html.py  # 爬 HikingNote 頁面
-│       └── scrape_codis.py           # 爬天氣月報表
+│       ├── scrape_codis.py           # 爬天氣月報表
+│       └── scrape_stations.py           # 爬氣象站資訊 靜態表/一次性
 │
 ├── .env                          # 環境變數設定檔 密碼、金鑰啥的
 └── README.md                     
