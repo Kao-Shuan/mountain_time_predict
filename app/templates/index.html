@@ -1,18 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>上傳 GPX 檔案</title>
 </head>
 
 <body>
-    <form method="POST" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
+    <h1>上傳 GPX 檔案</h1>
+    <input type="file" id="gpxInput" accept=".gpx">
+    <button onclick="uploadGpx()">上傳</button>
+    <div id="result"></div>
 
+    <script>
+        async function uploadGpx() {
+            const input = document.getElementById('gpxInput');
+            const file = input.files[0];
+            if (!file) {
+                alert('請選擇一個 GPX 檔案');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                document.getElementById('result').innerText = result.message || result.error;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('result').innerText = '❌ 上傳失敗';
+            }
+        }
+    </script>
 </body>
 
 </html>
